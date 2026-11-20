@@ -1,0 +1,5 @@
+material_id,material_name,element,assay_pct,on_hand_kg
+MAT-CU99,电解铜99,Cu,99.9,40
+MAT-ZN99,锌锭99,Zn,99.5,30
+MAT-BRASS,黄铜回炉料,Cu,65,80
+MAT-BRASS,黄铜回炉料,Zn,33,80

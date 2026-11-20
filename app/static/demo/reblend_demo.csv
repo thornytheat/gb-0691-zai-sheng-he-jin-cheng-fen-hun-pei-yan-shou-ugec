@@ -1,0 +1,11 @@
+lot,batch,mass,unit,moisture,element,assay,basis,revision
+A01,F-3101,1000,kg,0,Cu,6,dry,1
+A01,F-3101,1000,kg,0,Zn,5,dry,1
+B01,F-3102,1000,kg,0,Cu,10,dry,1
+B01,F-3102,1000,kg,0,Zn,2,dry,1
+C01,F-3103,800,kg,0,Cu,4,dry,1
+C01,F-3103,800,kg,0,Zn,5,dry,1
+D01,F-3104,1000,kg,0,Cu,10,dry,1
+D01,F-3104,1000,kg,0,Zn,5,dry,1
+E01,F-3105,1000,kg,0,Cu,15,dry,1
+E01,F-3105,1000,kg,0,Zn,5,dry,1

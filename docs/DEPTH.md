@@ -14,7 +14,8 @@
 | M4 混配试算 | 运行混配试算并复核证据 | `POST /api/m4`；`/work/4` | `app/modules/m4_blend/rules.py` | `tests/test_m4.py` |
 | M5 不确定区间 | 运行不确定区间并复核证据 | `POST /api/m5`；`/work/5` | `app/modules/m5_uncertainty/rules.py` | `tests/test_m5.py` |
 | M6 验收对照 | 运行验收对照并复核证据 | `POST /api/m6`；`/work/6` | `app/modules/m6_acceptance/rules.py` | `tests/test_m6.py` |
-| M7 复配批次 | 运行复配批次并复核证据 | `POST /api/m7`；`/work/7` | `app/modules/m7_reblend/rules.py` | `tests/test_m7.py` |
+| M7 复配批次 | 撤料试算复核 | `POST /api/m7`；`/work/7` | `app/modules/m7_reblend/rules.py` | `tests/test_m7.py` |
+| M7 整组补料 | 查看整组补料方案、确认扣料与验收重算 | `POST /api/reblend/plan`、`/api/reblend/confirm`；`/work/7` | `app/reblend.py`、`app/reblend_store.py`、`app/modules/m7_reblend/handler.py` | `tests/test_reblend.py`、`tests/test_reblend_api.py` |
 
 ## 陷阱登记
 
@@ -28,6 +29,11 @@
 | TRAP-15 | 吨与千克 | 静默覆盖或误计 | 显式裁决并保留证据 | `app/modules/m2_assay/rules.py` | `tests/test_m2.py::test_units` |
 | TRAP-19 | 批号元数据冲突优先 | 静默覆盖或误计 | 显式裁决并保留证据 | `app/modules/m3_recipe/rules.py` | `tests/test_m3.py::test_conflicting_lot_mass` |
 | TRAP-25 | 配方版本锁定 | 静默覆盖或误计 | 显式裁决并保留证据 | `app/modules/m3_recipe/rules.py` | `tests/test_m3.py::test_version_lock` |
+| TRAP-31 | 补料未化验元素当零 | 补后区间虚窄、误判通过 | 未化验按0~100保守区间并入上下界 | `app/reblend.py` | `tests/test_reblend.py::test_unmeasured_element_never_treated_as_zero` |
+| TRAP-32 | 剂量不等式负系数不翻转 | 可行域算反、超上限补料 | 系数正负分支显式处理并取交集 | `app/reblend.py` | `tests/test_reblend.py::test_dilution_material_has_upper_cap` |
+| TRAP-33 | 并发确认超领共用库存 | 两人同时提交各扣一份 | BEGIN IMMEDIATE串行化＋不足整单回滚 | `app/reblend_store.py` | `tests/test_reblend_api.py::test_concurrent_confirms_never_over_issue` |
+| TRAP-34 | 网络重试重复扣料 | 同方案扣两次库存 | 确认键唯一约束＋幂等回放 | `app/reblend_store.py` | `tests/test_reblend_api.py::test_retry_same_key_does_not_deduct_twice` |
+| TRAP-35 | 急单与省料两难 | 只按耗料排序拖过交期 | 急单按交期优先、普通单按最小耗料轮候 | `app/reblend.py` | `tests/test_reblend.py::test_urgent_order_allocated_before_normal` |
 
 ## 对账规则
 
